@@ -19,6 +19,77 @@ public class CustomArrayList<T> implements List<T> {
         }
     }
 
+    @Override
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size); // [cite: 15]
+        }
+        return (T) elements[index];
+    }
+
+    @Override
+    public T set(int index, T element) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+        if (element == null) {
+            throw new NullPointerException("Cannot set null element in CustomArrayList.");
+        }
+        elements[index] = element;
+        return element;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
+    public boolean add(Object o) {
+        if (o == null) {
+            throw new NullPointerException("Cannot add null element to CustomArrayList.");
+        }
+        ensureCapacity();
+        elements[size++] = o;
+        return true;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        if (o == null)
+            return false;
+        for (int i = 0; i < size; i++) {
+            if (o.equals(elements[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        if (o == null) {
+            throw new NullPointerException("Cannot remove null element from CustomArrayList.");
+        }
+        for (int i = 0; i < size; i++) {
+            if (o.equals(elements[i])) {
+                for (int j = i; j < size - 1; j++) {
+                    elements[j] = elements[j + 1];
+                }
+                elements[size - 1] = null;
+                size--;
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     // TODO: Override and fill the methods to complete the data structure
 
 }
